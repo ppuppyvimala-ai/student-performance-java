@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduPredict | Student Performance System</title>
+<style>
+:root{--p:#7027c9;--d:#451080;--l:#f3eaff;--t:#302044}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#faf8ff;color:var(--t)}
+header{background:white;padding:17px 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;box-shadow:0 2px 12px #ddd;position:sticky;top:0;z-index:5}
+.logo{font-size:25px;font-weight:bold;color:var(--p)}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+button{cursor:pointer}
+nav button{background:white;border:0;color:var(--d);font-weight:bold;padding:10px}
+nav button:hover{color:var(--p)}
+.primary{background:var(--p);color:white;border:0;padding:13px 22px;border-radius:8px;font-weight:bold}
+.primary:hover{background:var(--d)}
+.secondary{background:white;color:var(--p);border:1px solid var(--p);padding:12px 20px;border-radius:8px;font-weight:bold}
+.page{display:none;padding:30px 6%;min-height:75vh}
+.page.active{display:block}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:25px;align-items:center;background:linear-gradient(120deg,#451080,#9459df);padding:50px 7%;border-radius:20px;color:white}
+.hero h1{font-size:clamp(30px,4vw,45px);line-height:1.2}
+.hero p{line-height:1.7}
+.hero .primary{background:white;color:var(--p)}
+.hero-art{background:#f3eaff;border-radius:18px;padding:12px;text-align:center}
+.hero-art svg{width:100%;max-width:380px;height:auto}
+.title{text-align:center;color:var(--d);margin:35px 0 10px}
+.subtitle{text-align:center;color:#766b84}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin:25px 0}
+.card{background:white;padding:22px;border-radius:14px;box-shadow:0 3px 15px #e7dcf3;border-top:4px solid var(--p)}
+.card h3{color:var(--p)}
+.card p{line-height:1.5;color:#766b84}
+.icon{font-size:30px;background:var(--l);width:55px;height:55px;border-radius:13px;display:grid;place-items:center}
+.workflow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:25px 0}
+.step{background:white;border:1px solid #e5d8f3;border-radius:12px;padding:17px;text-align:center}
+.circle{background:var(--p);color:white;border-radius:50%;width:34px;height:34px;display:grid;place-items:center;margin:auto}
+.panel{max-width:570px;margin:15px auto;background:white;padding:25px;border-radius:15px;box-shadow:0 3px 15px #e7dcf3}
+label{display:block;margin:13px 0 6px;font-weight:bold}
+input{width:100%;padding:12px;border:1px solid #cbb5e8;border-radius:7px;font-size:15px}
+input:focus{outline:2px solid #b58aeb}
+.panel .primary{width:100%;margin-top:18px}
+.message{color:var(--d);font-weight:bold;line-height:1.5}
+.link{color:var(--p);text-decoration:underline;cursor:pointer}
+.stat{font-size:27px;color:var(--p);font-weight:bold}
+.chart{background:white;padding:22px;border-radius:14px;margin:20px 0;box-shadow:0 3px 15px #e7dcf3}
+.barline{display:flex;gap:10px;align-items:center;margin:15px 0}
+.barline span{width:100px}
+.bar{height:13px;background:#eee5f8;flex:1;border-radius:20px;overflow:hidden}
+.fill{height:100%;background:linear-gradient(90deg,#7027c9,#b58aeb)}
+table{width:100%;border-collapse:collapse;background:white;margin-top:15px}
+th,td{padding:12px;border:1px solid #e5d8f3;text-align:left}
+th{background:var(--l);color:var(--d)}
+.table-wrap{overflow-x:auto}
+footer{background:var(--d);color:white;text-align:center;padding:22px}
+@media(max-width:650px){
+ header{justify-content:center}
+ nav{justify-content:center}
+ .hero{grid-template-columns:1fr;padding:30px 6%}
+ .workflow{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:400px){.workflow{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="logo">✦ EduPredict</div>
+ <nav>
+  <button onclick="show('home')">Home</button>
+  <button onclick="show('studentPortal')">Student Portal</button>
+  <button onclick="show('adminLogin')">Admin Portal</button>
+ </nav>
+</header>
+
+<!-- HOME -->
+<section id="home" class="page active">
+ <div class="hero">
+  <div>
+   <p>WELCOME TO EDUPREDICT</p>
+   <h1>Predict. Analyse.<br>Improve Performance.</h1>
+   <p>A Student Performance Prediction and Analysis System to understand academic progress through marks, attendance and learning data.</p>
+   <button class="primary" onclick="show('studentPortal')">Student Portal →</button>
+   <button class="secondary" onclick="show('adminLogin')">Admin Portal</button>
+  </div>
+  <div class="hero-art">
+   <svg viewBox="0 0 400 270" role="img" aria-label="Academic performance analytics illustration">
+    <rect x="5" y="5" width="390" height="260" rx="15" fill="#f3eaff"/>
+    <rect x="25" y="25" width="210" height="140" rx="12" fill="white"/>
+    <text x="42" y="50" font-size="13" fill="#451080" font-weight="bold">Performance Overview</text>
+    <path d="M50 140V75M50 140H215" stroke="#cbb5e8" stroke-width="2"/>
+    <rect x="70" y="105" width="25" height="35" rx="4" fill="#b58aeb"/>
+    <rect x="108" y="85" width="25" height="55" rx="4" fill="#7027c9"/>
+    <rect x="146" y="65" width="25" height="75" rx="4" fill="#9255d9"/>
+    <rect x="184" y="95" width="25" height="45" rx="4" fill="#b58aeb"/>
+    <circle cx="305" cy="92" r="48" fill="#7027c9"/>
+    <circle cx="305" cy="92" r="32" fill="none" stroke="#d9c4f4" stroke-width="9"/>
+    <path d="M305 60A32 32 0 1 1 277 108" stroke="white" fill="none" stroke-width="9" stroke-linecap="round"/>
+    <text x="305" y="98" text-anchor="middle" fill="white" font-size="18" font-weight="bold">85%</text>
+    <rect x="250" y="155" width="110" height="35" rx="8" fill="white"/>
+    <text x="305" y="177" text-anchor="middle" font-size="12" fill="#451080">AI Analytics</text>
+    <circle cx="75" cy="210" r="20" fill="#d9c4f4"/>
+    <circle cx="75" cy="202" r="8" fill="#7027c9"/>
+    <path d="M56 232Q75 203 94 232" fill="#7027c9"/>
+    <rect x="115" y="198" width="240" height="32" rx="8" fill="white"/>
+    <text x="235" y="219" text-anchor="middle" font-size="12" fill="#451080">Student Learning Insights</text>
+   </svg>
+  </div>
+ </div>
+
+ <h2 class="title">Explore Our Features</h2>
+ <p class="subtitle">Everything you need to understand academic performance.</p>
+ <div class="cards">
+  <div class="card"><div class="icon">📝</div><h3>Student Registration</h3><p>Create a student account and access academic information.</p></div>
+  <div class="card"><div class="icon">📊</div><h3>Marks Analysis</h3><p>Record and analyse subject-wise marks.</p></div>
+  <div class="card"><div class="icon">📅</div><h3>Attendance Tracking</h3><p>Monitor attendance percentage and participation.</p></div>
+  <div class="card"><div class="icon">🤖</div><h3>Performance Prediction</h3><p>Explore estimated academic performance categories.</p></div>
+ </div>
+
+ <h2 class="title">How It Works</h2>
+ <p class="subtitle">Four simple steps to understand academic progress.</p>
+ <div class="workflow">
+  <div class="step"><div class="circle">1</div><h3>Register</h3><p>Create your account.</p></div>
+  <div class="step"><div class="circle">2</div><h3>Enter Data</h3><p>Add marks and attendance.</p></div>
+  <div class="step"><div class="circle">3</div><h3>Analyse</h3><p>Review academic data.</p></div>
+  <div class="step"><div class="circle">4</div><h3>View Result</h3><p>See your estimated category.</p></div>
+ </div>
+ <div class="chart">
+  <h3 class="title">Example Academic Performance</h3>
+  <div class="barline"><span>Excellent</span><div class="bar"><div class="fill" style="width:88%"></div></div><b>88%</b></div>
+  <div class="barline"><span>Good</span><div class="bar"><div class="fill" style="width:72%"></div></div><b>72%</b></div>
+  <div class="barline"><span>Average</span><div class="bar"><div class="fill" style="width:55%"></div></div><b>55%</b></div>
+  <p class="subtitle">Illustrative values only.</p>
+ </div>
+</section>
+
+<!-- STUDENT PORTAL -->
+<section id="studentPortal" class="page">
+ <h2 class="title">Student Portal</h2>
+ <p class="subtitle">Register a new account or log in to your dashboard.</p>
+ <div class="cards">
+  <div class="card">
+   <div class="icon">📝</div><h3>New Student?</h3>
+   <p>Create your student account.</p>
+   <button class="primary" onclick="show('register')">Registration</button>
+  </div>
+  <div class="card">
+   <div class="icon">🎓</div><h3>Already Registered?</h3>
+   <p>Access your student dashboard.</p>
+   <button class="primary" onclick="show('studentLogin')">Student Login</button>
+  </div>
+ </div>
+ <button class="secondary" onclick="show('home')">Back to Home</button>
+</section>
+
+<!-- REGISTRATION -->
+<section id="register" class="page">
+ <div class="panel">
+  <h2 class="title">Student Registration</h2>
+  <form id="registerForm">
+   <label>Student Name</label><input id="regName" required>
+   <label>Roll Number</label><input id="regRoll" required>
+   <label>Email Address</label><input id="regEmail" type="email" required>
+   <label>Create Password</label><input id="regPassword" type="password" minlength="4" required>
+   <button class="primary">Register</button>
+  </form>
+  <p id="registerMessage" class="message"></p>
+  <p>Already registered? <span class="link" onclick="show('studentLogin')">Login</span></p>
+ </div>
+</section>
+
+<!-- STUDENT LOGIN -->
+<section id="studentLogin" class="page">
+ <div class="panel">
+  <h2 class="title">Student Login</h2>
+  <form id="studentLoginForm">
+   <label>Roll Number</label><input id="loginRoll" required>
+   <label>Password</label><input id="loginPassword" type="password" required>
+   <button class="primary">Login</button>
+  </form>
+  <p id="studentLoginMessage" class="message"></p>
+  <p>New student? <span class="link" onclick="show('register')">Register here</span></p>
+ </div>
+</section>
+
+<!-- ADMIN LOGIN -->
+<section id="adminLogin" class="page">
+ <div class="panel">
+  <h2 class="title">Admin Portal Login</h2>
+  <form id="adminLoginForm">
+   <label>Admin Username</label><input id="adminUsername" required>
+   <label>Password</label><input id="adminPassword" type="password" required>
+   <button class="primary">Admin Login</button>
+  </form>
+  <p id="adminMessage" class="message"></p>
+  <p>Demo username: <b>admin</b></p>
+  <p>Demo password: <b>admin123</b></p>
+ </div>
+</section>
+
+<!-- STUDENT DASHBOARD -->
+<section id="dashboard" class="page">
+ <h2 class="title">Student Dashboard</h2>
+ <div class="cards">
+  <div class="card"><h3>Student Name</h3><p id="dashName">-</p></div>
+  <div class="card"><h3>Roll Number</h3><p id="dashRoll">-</p></div>
+  <div class="card"><h3>Email</h3><p id="dashEmail">-</p></div>
+  <div class="card"><h3>Average Marks</h3><p class="stat" id="dashAverage">0%</p></div>
+ </div>
+ <div class="panel">
+  <h2 class="title">Subject Marks & Attendance</h2>
+  <form id="marksForm">
+   <label>Data Structures & Algorithms</label><input id="marks1" type="number" min="0" max="100" value="0" required>
+   <label>Machine Learning</label><input id="marks2" type="number" min="0" max="100" value="0" required>
+   <label>Database Management Systems</label><input id="marks3" type="number" min="0" max="100" value="0" required>
+   <label>Operating Systems</label><input id="marks4" type="number" min="0" max="100" value="0" required>
+   <label>Discrete Mathematics</label><input id="marks5" type="number" min="0" max="100" value="0" required>
+   <label>Artificial Intelligence Lab</label><input id="marks6" type="number" min="0" max="100" value="0" required>
+   <label>Attendance Percentage</label><input id="attendance" type="number" min="0" max="100" value="0" required>
+   <label>Assignment Score</label><input id="assignment" type="number" min="0" max="100" value="0" required>
+   <label>Study Hours per Day</label><input id="studyHours" type="number" min="0" max="24" value="0" required>
+   <button class="primary">Save Academic Details</button>
+  </form>
+  <p id="saveMessage" class="message"></p>
+ </div>
+ <div class="panel">
+  <h2 class="title">Performance Prediction</h2>
+  <p>Estimated Performance Category:</p>
+  <p class="stat" id="predictionResult">Not calculated</p>
+  <button class="primary" onclick="predictPerformance()">Predict Performance</button>
+  <p id="predictionNote" class="message"></p>
+ </div>
+ <button class="primary" onclick="logout()">Logout</button>
+</section>
+
+<!-- ADMIN DASHBOARD -->
+<section id="adminDashboard" class="page">
+ <h2 class="title">Admin Dashboard</h2>
+ <div class="card"><h3>Total Registered Students</h3><p class="stat" id="studentCount">0</p></div>
+ <h3>Student Records</h3>
+ <div class="table-wrap">
+  <table>
+   <thead><tr><th>Name</th><th>Roll Number</th><th>Email</th></tr></thead>
+   <tbody id="studentTable"></tbody>
+  </table>
+ </div>
+ <br><button class="primary" onclick="logout()">Logout</button>
+</section>
+
+<footer>
+ <p>✦ EduPredict</p>
+ <p>Student Performance Prediction and Analysis System</p>
+ <p>Academic Project Demonstration</p>
+</footer>
+
+<script>
+let currentStudent=null;
+
+function getStudents(){
+ return JSON.parse(localStorage.getItem("edupredictStudents")||"[]");
+}
+function saveStudents(s){
+ localStorage.setItem("edupredictStudents",JSON.stringify(s));
+}
+function show(id){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ window.scrollTo(0,0);
+}
+
+document.getElementById("registerForm").addEventListener("submit",function(e){
+ e.preventDefault();
+ let students=getStudents();
+ let roll=document.getElementById("regRoll").value.trim();
+ if(students.some(s=>s.roll.toLowerCase()===roll.toLowerCase())){
+  document.getElementById("registerMessage").textContent="This roll number is already registered.";
+  return;
+ }
+ students.push({
+  name:document.getElementById("regName").value.trim(),
+  roll:roll,
+  email:document.getElementById("regEmail").value.trim(),
+  password:document.getElementById("regPassword").value,
+  marks:[0,0,0,0,0,0],attendance:0,assignment:0,studyHours:0
+ });
+ saveStudents(students);
+ document.getElementById("registerMessage").textContent="Registration successful! Please log in.";
+ this.reset();
+});
+
+document.getElementById("studentLoginForm").addEventListener("submit",function(e){
+ e.preventDefault();
+ let roll=document.getElementById("loginRoll").value.trim();
+ let pass=document.getElementById("loginPassword").value;
+ let student=getStudents().find(s=>s.roll.toLowerCase()===roll.toLowerCase()&&s.password===pass);
+ if(!student){
+  document.getElementById("studentLoginMessage").textContent="Invalid roll number or password.";
+  return;
+ }
+ currentStudent=student;
+ loadDashboard();
+ show("dashboard");
+});
+
+document.getElementById("adminLoginForm").addEventListener("submit",function(e){
+ e.preventDefault();
+ let u=document.getElementById("adminUsername").value;
+ let p=document.getElementById("adminPassword").value;
+ if(u==="admin"&&p==="admin123"){
+  loadAdmin();
+  show("adminDashboard");
+ }else{
+  document.getElementById("adminMessage").textContent="Invalid admin login details.";
+ }
+});
+
+function loadDashboard(){
+ if(!currentStudent)return;
+ document.getElementById("dashName").textContent=currentStudent.name;
+ document.getElementById("dashRoll").textContent=currentStudent.roll;
+ document.getElementById("dashEmail").textContent=currentStudent.email;
+ for(let i=0;i<6;i++){
+  document.getElementById("marks"+(i+1)).value=currentStudent.marks[i]??0;
+ }
+ document.getElementById("attendance").value=currentStudent.attendance??0;
+ document.getElementById("assignment").value=currentStudent.assignment??0;
+ document.getElementById("studyHours").value=currentStudent.studyHours??0;
+ updateAverage();
+ document.getElementById("predictionResult").textContent="Not calculated";
+ document.getElementById("predictionNote").textContent="";
+}
+
+document.getElementById("marksForm").addEventListener("submit",function(e){
+ e.preventDefault();
+ if(!currentStudent)return;
+ let marks=[];
+ for(let i=1;i<=6;i++){
+  let n=Number(document.getElementById("marks"+i).value);
+  if(n<0||n>100)return;
+  marks.push(n);
+ }
+ let attendance=Number(document.getElementById("attendance").value);
+ let assignment=Number(document.getElementById("assignment").value);
+ let studyHours=Number(document.getElementById("studyHours").value);
+ if(attendance<0||attendance>100||assignment<0||assignment>100||studyHours<0||studyHours>24)return;
+ let students=getStudents();
+ let index=students.findIndex(s=>s.roll===currentStudent.roll);
+ if(index<0)return;
+ students[index].marks=marks;
+ students[index].attendance=attendance;
+ students[index].assignment=assignment;
+ students[index].studyHours=studyHours;
+ saveStudents(students);
+ currentStudent=students[index];
+ updateAverage();
+ document.getElementById("saveMessage").textContent="Academic details saved successfully!";
+});
+
+function updateAverage(){
+ let avg=currentStudent.marks.reduce((a,b)=>a+Number(b),0)/6;
+ document.getElementById("dashAverage").textContent=avg.toFixed(1)+"%";
+}
+function predictPerformance(){
+ if(!currentStudent)return;
+ let avg=currentStudent.marks.reduce((a,b)=>a+Number(b),0)/6;
+ let score=avg*.5+currentStudent.attendance*.2+
+ currentStudent.assignment*.2+(currentStudent.studyHours/24*100)*.1;
+ let result=score>=85?"Excellent":score>=70?"Good":score>=50?"Average":"Needs Improvement";
+ document.getElementById("predictionResult").textContent=result;
+ document.getElementById("predictionNote").textContent=
+ "Estimated score: "+score.toFixed(1)+"%. This demo uses a rule-based formula, not a trained ML model.";
+}
+function loadAdmin(){
+ let students=getStudents();
+ document.getElementById("studentCount").textContent=students.length;
+ let table=document.getElementById("studentTable");
+ table.innerHTML="";
+ students.forEach(s=>{
+  let row=document.createElement("tr");
+  [s.name,s.roll,s.email].forEach(v=>{
+   let cell=document.createElement("td");
+   cell.textContent=v;
+   row.appendChild(cell);
+  });
+  table.appendChild(row);
+ });
+}
+function logout(){
+ currentStudent=null;
+ document.getElementById("studentLoginForm").reset();
+ document.getElementById("adminLoginForm").reset();
+ show("home");
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Performance System</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2ff;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            background: white;
+            max-width: 750px;
+            margin: 50px auto;
+            padding: 35px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px #cccccc;
+        }
+
+        h1 {
+            color: #3730a3;
+        }
+
+        p {
+            color: #555555;
+            font-size: 17px;
+        }
+
+        button {
+            background: #3730a3;
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #5145cd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Student Performance Prediction and Analysis System</h1>
+
+        <p>Welcome to our Student Performance Management System.</p>
+
+        <p>Monitor student marks, attendance and academic progress.</p>
+
+        <button onclick="alert('Welcome to Student Performance System!')">
+            Get Started
+        </button>
+
+    </div>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Performance System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #eef2ff;
+    margin: 0;
+    color: #222;
+}
+header {
+    background: #3730a3;
+    color: white;
+    padding: 25px;
+    text-align: center;
+}
+.container {
+    max-width: 850px;
+    margin: 30px auto;
+    padding: 20px;
+}
+.card {
+    background: white;
+    padding: 25px;
+    margin: 15px 0;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px #cccccc;
+}
+button {
+    background: #3730a3;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 7px;
+    margin: 5px;
+    cursor: pointer;
+}
+input {
+    padding: 12px;
+    margin: 8px;
+    width: 85%;
+    max-width: 350px;
+}
+h2 { color: #3730a3; }
+.page { display: none; }
+#home { display: block; }
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Student Performance Prediction</h1>
+<p>Student Performance Prediction and Analysis System</p>
+</header>
+
+<div class="container">
+
+<div id="home" class="page card">
+<h2>Welcome!</h2>
+<p>Monitor marks, attendance and academic progress.</p>
+<button onclick="showPage('student')">Student Login</button>
+<button onclick="showPage('register')">Registration</button>
+<button onclick="showPage('admin')">Admin Login</button>
+</div>
+
+<div id="student" class="page card">
+<h2>Student Login</h2>
+<input id="studentId" placeholder="Enter Student ID">
+<input type="password" placeholder="Password">
+<br>
+<button onclick="showPage('dashboard')">Login</button>
+<button onclick="showPage('home')">Back</button>
+</div>
+
+<div id="register" class="page card">
+<h2>Student Registration</h2>
+<input placeholder="Student Name">
+<input placeholder="Student ID">
+<input placeholder="Email">
+<input type="password" placeholder="Create Password">
+<br>
+<button onclick="alert('Demo registration form completed!')">Register</button>
+<button onclick="showPage('home')">Back</button>
+</div>
+
+<div id="admin" class="page card">
+<h2>Admin Login</h2>
+<input placeholder="Admin Username">
+<input type="password" placeholder="Password">
+<br>
+<button onclick="showPage('dashboard')">Login</button>
+<button onclick="showPage('home')">Back</button>
+</div>
+
+<div id="dashboard" class="page card">
+<h2>Student Dashboard</h2>
+<p>Welcome to your academic dashboard!</p>
+<button onclick="showPage('marks')">Subject Marks</button>
+<button onclick="showPage('attendance')">Attendance</button>
+<button onclick="showPage('prediction')">Performance Prediction</button>
+<button onclick="showPage('home')">Logout</button>
+</div>
+
+<div id="marks" class="page card">
+<h2>Subject-wise Marks</h2>
+<p>Data Structures: 85</p>
+<p>Machine Learning: 90</p>
+<p>Database Management: 78</p>
+<p>Operating Systems: 82</p>
+<button onclick="showPage('dashboard')">Back</button>
+</div>
+
+<div id="attendance" class="page card">
+<h2>Subject-wise Attendance</h2>
+<p>Data Structures: 85%</p>
+<p>Machine Learning: 90%</p>
+<p>Database Management: 80%</p>
+<p>Operating Systems: 75%</p>
+<button onclick="showPage('dashboard')">Back</button>
+</div>
+
+<div id="prediction" class="page card">
+<h2>Performance Prediction</h2>
+<p>Enter your average marks:</p>
+<input type="number" id="score" placeholder="Marks (0-100)" min="0" max="100">
+<br>
+<button onclick="predict()">Predict Performance</button>
+<h3 id="result"></h3>
+<button onclick="showPage('dashboard')">Back</button>
+</div>
+
+</div>
+
+<script>
+function showPage(page) {
+    document.querySelectorAll('.page').forEach(function(p) {
+        p.style.display = 'none';
+    });
+    document.getElementById(page).style.display = 'block';
+}
+
+function predict() {
+    let score = Number(document.getElementById('score').value);
+    let result = document.getElementById('result');
+
+    if (document.getElementById('score').value === '' || score < 0 || score > 100) {
+        result.innerText = 'Enter valid marks between 0 and 100.';
+    } else if (score >= 85) {
+        result.innerText = 'Excellent Performance';
+    } else if (score >= 70) {
+        result.innerText = 'Good Performance';
+    } else if (score >= 50) {
+        result.innerText = 'Average Performance';
+    } else {
+        result.innerText = 'Needs Improvement';
+    }
+}
+</script>
+
+</body>
+</html>
+</body>
+</html>
